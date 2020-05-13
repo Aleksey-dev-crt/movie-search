@@ -1,0 +1,39 @@
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  height: auto;
+  margin: 10px;
+}
+
+.mat-card-lg-image {
+  width: 150px;
+  height: 225px;
+}
+
+.mat-card-content {
+  text-align: center;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding-top: 0;
+
+}
+
+.wrapper {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.clear {
+  width: 100px;
+  height: 50px;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
