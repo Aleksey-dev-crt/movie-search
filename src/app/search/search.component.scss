@@ -18,7 +18,7 @@ h1 {
   justify-content: space-between;
   width: 300px;
   height: auto;
-  gap: 20px;
+  border: inset 1px #673ab7;
   box-shadow: 5px 5px 2px #ccc;
 }
 
@@ -46,10 +46,11 @@ h1 {
 }
 
 .wrapper {
-  position: relative;
+  padding: 10px;
   justify-content: center;
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .mat-icon-button {
