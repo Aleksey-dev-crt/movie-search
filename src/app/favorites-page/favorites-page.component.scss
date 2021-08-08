@@ -1,0 +1,58 @@
+.mat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  height: auto;
+  margin: 10px;
+  box-shadow: 5px 5px 2px #ccc;
+}
+
+.mat-card:hover {
+  transform: translate(-5px, -5px);
+  transition: transform .2s linear;
+  box-shadow: 10px 10px 5px #ccc;
+}
+
+.mat-card-lg-image {
+  width: 150px;
+  height: 225px;
+}
+
+.mat-card-content {
+  text-align: center;
+}
+
+.mat-card-actions {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding-top: 0;
+
+}
+
+.wrapper {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.clear {
+  width: 100px;
+  height: 50px;
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+
+.clear:hover {
+ background-color: #f11600;
+}
+
+.remove:hover {
+  background-color: #f11600;
+}
+
+.open:hover {
+  background-color: #5700f1;
+}

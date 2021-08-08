@@ -1,0 +1,146 @@
+.wrapper {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.image {
+  display: block;
+  width: 450px;
+  height: 675px;
+  border: solid 1px #673ab7;
+  border-radius: 5px;
+  box-shadow: 5px 5px 2px #ccc;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: inset 1px #673ab7;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px #ccc;
+
+}
+
+.content {
+  position: relative;
+  margin: 0 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  max-width: 600px;
+}
+
+.overview {
+  margin: 20px 0;
+  width: 100%;
+  padding: 10px;
+  border: inset 1px #673ab7;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px #ccc;
+}
+
+.genres {
+  margin-bottom: 10px;
+}
+
+.mat-raised-button {
+  width: 200px;
+}
+
+small {
+  font-size: 12px;
+}
+
+strong {
+  font-size: 14px;
+}
+
+.details-block {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: inset 1px #673ab7;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px #ccc;
+}
+
+.recommendations {
+  display: flex;
+  flex-direction: column;
+}
+
+.mat-card-title {
+  font-size: 12px;
+  margin: 0;
+}
+
+.number {
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+  box-sizing: border-box;
+  height: auto;
+  width: 135px;
+}
+
+
+.viewport {
+  height: 210px;
+  width: 160px;
+  border: 1px inset #333;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px #ccc;
+}
+
+.recImg {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 3px 3px 1px #ccc;
+}
+
+.recImg:hover {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 5px 5px 2px #ccc;
+  transform: translate(-2px, -2px);
+  transition: transform .2s linear;
+}
+
+.mat-icon-button {
+  cursor: default;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.open:hover {
+  background-color: #5700f1;
+}
+
+.toFavorites:hover {
+  background-color: #f8c200;
+}
+
+.toFavorites:disabled {
+  background-color: rgba(0,0,0,.12);
+}
+
+

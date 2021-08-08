@@ -1,0 +1,131 @@
+<div class="search">
+  <h1>Search movies</h1>
+  <mat-form-field>
+    <mat-label>find</mat-label>
+    <input
+      matInput
+      placeholder="Start type movie name"
+      [minlength]="minLength"
+      [(ngModel)]="searchStr"
+      (ngModelChange)="handleChange()"
+      (keyup.enter)="entered()"
+    />
+  </mat-form-field>
+  <mat-error *ngIf="validationError">
+    Search query should be more than 3 characters!
+  </mat-error>
+</div>
+
+<div class="container">
+  <div class="wrapper" *ngIf="!searchResults; else search">
+    <mat-card *ngFor="let results of popular">
+      <mat-card-header>
+        <mat-card-title>{{ results.original_title }}</mat-card-title>
+        <mat-card-subtitle
+          >Popularity: {{ results.popularity }}</mat-card-subtitle
+        >
+        <mat-card-subtitle
+          >Release date: {{ results.release_date }}</mat-card-subtitle
+        >
+      </mat-card-header>
+
+      <mat-card-content class="mat-card-content">
+        <img
+          mat-card-lg-image
+          src="https://image.tmdb.org/t/p/w220_and_h330_face{{
+            results.poster_path
+          }}"
+          alt="Picture not found"
+        />
+        <p>Vote average: {{ results.vote_average }}</p>
+        <p>Vote count: {{ results.vote_count }}</p>
+
+        <button
+          mat-icon-button
+          color="warn"
+          *ngIf="this.movieService.inFavorites(results.id)"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <a
+          class="open"
+          mat-raised-button
+          color="primary"
+          mat-button
+          [routerLink]="['/moviePage', results.id]"
+          >Open</a
+        >
+        <button
+          class="toFavorites"
+          mat-raised-button
+          color="accent"
+          mat-button
+          (click)="toFavorites(results.id)"
+          [disabled]="this.movieService.inFavorites(results.id)"
+        >
+          To favorites
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <ng-template #search>
+    <div class="wrapper">
+      <mat-card *ngFor="let searchResults of foundMovie">
+        <mat-card-header>
+          <mat-card-title>{{ searchResults.original_title }}</mat-card-title>
+          <mat-card-subtitle
+            >Popularity: {{ searchResults.popularity }}</mat-card-subtitle
+          >
+          <mat-card-subtitle
+            >Release date: {{ searchResults.release_date }}</mat-card-subtitle
+          >
+        </mat-card-header>
+
+        <mat-card-content class="mat-card-content">
+          <img
+            mat-card-lg-image
+            src="https://image.tmdb.org/t/p/w220_and_h330_face{{
+              searchResults.poster_path
+            }}"
+            alt="Picture not found"
+          />
+          <p>Vote average: {{ searchResults.vote_average }}</p>
+          <p>Vote count: {{ searchResults.vote_count }}</p>
+        </mat-card-content>
+
+        <button
+          mat-icon-button
+          color="warn"
+          *ngIf="this.movieService.inFavorites(searchResults.id)"
+        >
+          <mat-icon>favorite</mat-icon>
+        </button>
+
+        <mat-card-actions>
+          <a
+            class="open"
+            mat-raised-button
+            color="primary"
+            mat-button
+            [routerLink]="['/moviePage', searchResults.id]"
+            >Open</a
+          >
+          <button
+            class="toFavorites"
+            mat-raised-button
+            color="accent"
+            mat-button
+            (click)="toFavorites(searchResults.id)"
+            [disabled]="this.movieService.inFavorites(searchResults.id)"
+          >
+            To favorites
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </ng-template>
+</div>

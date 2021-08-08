@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="wrapper">
+    <mat-card *ngFor="let favoriteMovie of favoriteMovies">
+      <mat-card-header>
+        <mat-card-title>{{favoriteMovie.original_title}}</mat-card-title>
+        <mat-card-subtitle>Popularity: {{favoriteMovie.popularity}}</mat-card-subtitle>
+        <mat-card-subtitle>Release date: {{favoriteMovie.release_date}}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content class="mat-card-content">
+        <img
+          mat-card-lg-image
+          src="https://image.tmdb.org/t/p/w220_and_h330_face{{favoriteMovie.poster_path}}"
+          alt="Picture not found"
+        >
+        <p>Vote average: {{favoriteMovie.vote_average}}</p>
+        <p>Vote count: {{favoriteMovie.vote_count}}</p>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <a
+          class="open"
+          href="https://www.themoviedb.org/movie/{{favoriteMovie.id}}"
+          mat-raised-button
+          color="primary"
+          mat-button
+          target="_blank"
+        >Open</a>
+      <button
+        class="remove"
+        mat-raised-button
+        color="warn"
+        mat-button
+        (click)="remove(favoriteMovie.id)"
+      >Remove</button>
+
+      </mat-card-actions>
+
+    </mat-card>
+
+    <button
+      class="clear"
+      mat-raised-button
+      color="warn"
+      mat-button
+      (click)="clear()"
+    >Clear</button>
+
+  </div>
+</div>
+
+
+
+
