@@ -17,7 +17,13 @@
 </div>
 
 <div class="container">
-  <div class="wrapper" *ngIf="!searchResults; else search">
+  <div class="wrapper"
+    infiniteScroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    *ngIf="!searchStr; else search"
+   >
     <mat-card *ngFor="let results of popular">
       <mat-card-header>
         <mat-card-title>{{ results.original_title }}</mat-card-title>
@@ -35,7 +41,7 @@
           src="https://image.tmdb.org/t/p/w220_and_h330_face{{
             results.poster_path
           }}"
-          alt="Picture not found"
+          alt="{{results.original_title}}"
         />
         <p>Vote average: {{ results.vote_average }}</p>
         <p>Vote count: {{ results.vote_count }}</p>
@@ -70,18 +76,35 @@
         </button>
       </mat-card-actions>
     </mat-card>
+      <div class="loader">
+        <ngx-spinner
+        bdColor=""
+        size="default"
+        color="#5700f1"
+        type="ball-pulse-sync"
+        [fullScreen]="false"
+        >
+        </ngx-spinner>
+      </div>
   </div>
 
-  <ng-template #search>
-    <div class="wrapper">
-      <mat-card *ngFor="let searchResults of foundMovie">
+
+    <ng-template #search>
+      <div
+      class="wrapper"
+      infiniteScroll
+      [infiniteScrollDistance]="1"
+      [infiniteScrollThrottle]="50"
+      (scrolled)="onScrollSearch()"
+      >
+      <mat-card *ngFor="let found of searchResults">
         <mat-card-header>
-          <mat-card-title>{{ searchResults.original_title }}</mat-card-title>
+          <mat-card-title>{{ found.original_title }}</mat-card-title>
           <mat-card-subtitle
-            >Popularity: {{ searchResults.popularity }}</mat-card-subtitle
+            >Popularity: {{ found.popularity }}</mat-card-subtitle
           >
           <mat-card-subtitle
-            >Release date: {{ searchResults.release_date }}</mat-card-subtitle
+            >Release date: {{ found.release_date }}</mat-card-subtitle
           >
         </mat-card-header>
 
@@ -89,18 +112,18 @@
           <img
             mat-card-lg-image
             src="https://image.tmdb.org/t/p/w220_and_h330_face{{
-              searchResults.poster_path
+              found.poster_path
             }}"
-            alt="Picture not found"
+            alt="{{found.original_title}}"
           />
-          <p>Vote average: {{ searchResults.vote_average }}</p>
-          <p>Vote count: {{ searchResults.vote_count }}</p>
+          <p>Vote average: {{ found.vote_average }}</p>
+          <p>Vote count: {{ found.vote_count }}</p>
         </mat-card-content>
 
         <button
           mat-icon-button
           color="warn"
-          *ngIf="this.movieService.inFavorites(searchResults.id)"
+          *ngIf="this.movieService.inFavorites(found.id)"
         >
           <mat-icon>favorite</mat-icon>
         </button>
@@ -111,7 +134,7 @@
             mat-raised-button
             color="primary"
             mat-button
-            [routerLink]="['/moviePage', searchResults.id]"
+            [routerLink]="['/moviePage', found.id]"
             >Open</a
           >
           <button
@@ -119,13 +142,23 @@
             mat-raised-button
             color="accent"
             mat-button
-            (click)="toFavorites(searchResults.id)"
-            [disabled]="this.movieService.inFavorites(searchResults.id)"
+            (click)="toFavorites(found.id)"
+            [disabled]="this.movieService.inFavorites(found.id)"
           >
             To favorites
           </button>
         </mat-card-actions>
       </mat-card>
+      <div class="loader">
+        <ngx-spinner
+        bdColor=""
+        size="default"
+        color="#5700f1"
+        type="ball-pulse-sync"
+        [fullScreen]="false"
+        >
+        </ngx-spinner>
+      </div>
     </div>
   </ng-template>
 </div>

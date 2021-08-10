@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {MovieService} from "../services/movie.service";
 
 export interface favoriteMovies {
   adult: boolean
@@ -35,14 +34,10 @@ export class FavoritesPageComponent implements OnInit {
 
 
   ngOnInit(): void {
-
     for (let i = 0; i < localStorage.length; i++) {
       this.fromLocalStorage = localStorage.getItem(`${localStorage.key(i)}`)
       this.favoriteMovies.push(JSON.parse(this.fromLocalStorage))
     }
-    this.favoriteMovies.map<void>(results => {
-      this.favoriteMovie = results
-    })
   }
 
   clear() {

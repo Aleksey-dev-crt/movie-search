@@ -3,7 +3,7 @@
     <img
       class="image"
       src="https://image.tmdb.org/t/p/w220_and_h330_face{{MovieDetails.poster_path}}"
-      alt="Picture not found"
+      alt="{{MovieDetails.original_title}}"
     >
     <div class="content">
       <div class="header">
@@ -40,7 +40,7 @@
                   <img
                     mat-card-md-image
                     src="https://image.tmdb.org/t/p/w220_and_h330_face{{results.poster_path}}"
-                    alt="Picture not found"
+                    alt="{{results.original_title}}"
                     class = "recImg"
                   >
                 </mat-card-content>

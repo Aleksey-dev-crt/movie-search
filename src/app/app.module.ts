@@ -9,6 +9,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import {MatButtonModule} from '@angular/material/button';
 import {HttpClientModule} from "@angular/common/http";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {AppComponent} from './app.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -30,6 +32,8 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    InfiniteScrollModule,
+    NgxSpinnerModule,
     FormsModule,
     BrowserAnimationsModule,
     MatToolbarModule,

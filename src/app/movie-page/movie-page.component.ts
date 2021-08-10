@@ -22,7 +22,6 @@ export class MoviePageComponent implements OnInit {
               ) {}
 
   ngOnInit(): void {
-
     this.route.params.subscribe((params: Params) => {
       this.movieID = params.id
     })
@@ -35,11 +34,6 @@ export class MoviePageComponent implements OnInit {
     this.movieService.getMovieRecommendations(this.movieID)
       .subscribe(response => {
         this.recommendations = response['results']
-        //console.log('getMovieRecommendations', this.recommendations)
-        this.recommendations.map<void>(results => {
-          this.results = results
-          //console.log('results', this.results)
-        })
       })
   }
 

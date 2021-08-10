@@ -14,10 +14,14 @@ export class MovieService {
   constructor(private http: HttpClient) {
   }
 
-
-  getMovie(movieName: string): Observable<any> {
+  getMovies(pageNumber: number): Observable<any> {
     return this.http.get<any>
-    (      `${environment.searchUrl}${movieName}!&api_key=${environment.apiKey}`)
+    (`${environment.popularUrl}api_key=${environment.apiKey}&language=en-US&page=${pageNumber}`)
+  }
+
+  getMovie(movieName: string, pageNumber: number): Observable<any> {
+    return this.http.get<any>
+    (`${environment.searchUrl}${movieName}!&api_key=${environment.apiKey}&language=en-US&page=${pageNumber}`)
   }
 
   getMovieDetails(id: number): Observable<any> {
@@ -47,18 +51,15 @@ export class MovieService {
   }
 
   inFavorites(id?: number) {
-
-      for (let i = 0; i < localStorage.length; i++) {
-        this.keys.push(localStorage.key(i))
-      }
-
-      let equal = this.keys.find(keys => keys == id)
-      if (equal) {
-        return true
-      } else {
-        return false
-      }
+    for (let i = 0; i < localStorage.length; i++) {
+      this.keys.push(localStorage.key(i))
     }
 
-
+    let equal = this.keys.find(keys => keys == id)
+    if (equal) {
+      return true
+    } else {
+      return false
+    }
+  }
 }

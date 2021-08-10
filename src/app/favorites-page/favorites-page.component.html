@@ -1,4 +1,5 @@
 <div class="container">
+  <h2>Favorites movies</h2>
   <div class="wrapper">
     <mat-card *ngFor="let favoriteMovie of favoriteMovies">
       <mat-card-header>
@@ -11,7 +12,7 @@
         <img
           mat-card-lg-image
           src="https://image.tmdb.org/t/p/w220_and_h330_face{{favoriteMovie.poster_path}}"
-          alt="Picture not found"
+          alt="{{favoriteMovie.original_title}}"
         >
         <p>Vote average: {{favoriteMovie.vote_average}}</p>
         <p>Vote count: {{favoriteMovie.vote_count}}</p>

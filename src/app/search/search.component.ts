@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MovieService} from "../services/movie.service";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
 import {movieData} from "../shared/interfaces";
+import {NgxSpinnerService} from "ngx-spinner";
 
 
 @Component({
@@ -16,41 +15,55 @@ export class SearchComponent implements OnInit  {
   minLength: number = 3
   validationError: boolean
   popular: movieData[] = []
-  results: movieData
-  foundMovie: movieData[] = []
-  searchResults: movieData
+  searchResults: movieData[] = []
+  pageNumber: number = 1
+  searchPageNumber: number = 1
+  totalPages: number
 
   constructor(
     public movieService: MovieService,
-    private http: HttpClient,
-  ) {
-  }
+    private spinner: NgxSpinnerService
+  ) {}
 
 
   ngOnInit(): void {
-    this.http.get<movieData[]>(`${environment.popularUrl}api_key=${environment.apiKey}&language=en-US&page=1`)
-      .subscribe(response => {
-        this.popular = response['results']
-        //console.log('popular', this.popular)
-        this.popular.map<void>(results => {
-          this.results = results
-          //console.log('results', this.results)
-        })
-      })
-    this.movieService.keys = []
+    this.initMovies()
   }
 
+  initMovies() {
+    this.movieService.getMovies(this.pageNumber)
+    .subscribe(response => {
+      this.popular = response['results']
+      this.totalPages = response['total_pages']
+      //console.log('popular', this.popular)
+      this.movieService.keys = []
+    })
+  }
+
+  onScroll() {
+    if (this.pageNumber !== this.totalPages) {
+      this.pageNumber++
+      //console.log('pageNumber', this.pageNumber)
+      this.spinner.show()
+      this.loadNextMovies(this.pageNumber)
+      this.spinner.hide()
+    }
+  }
+
+  loadNextMovies(pageNumber: number) {
+    this.movieService.getMovies(pageNumber)
+    .subscribe(response => {
+      this.popular = this.popular.concat(response['results'])
+      //console.log('newPopular', this.popular)
+    })
+}
 
   toFavorites(id: number) {
-    this.movieService.getFavorites(id, this.popular, this.foundMovie, null)
+    this.movieService.getFavorites(id, this.popular, this.searchResults, null)
   }
 
-
   handleChange() {
-    this.movieService.getMovie(this.searchStr)
-      .subscribe(movieName => {
-        this.foundMovie = movieName['results']
-      })
+    this.spinner.hide()
     if (this.searchStr.length <= this.minLength) {
       this.searchResults = null
     }
@@ -58,16 +71,31 @@ export class SearchComponent implements OnInit  {
 
   entered() {
     if (this.searchStr.length >= this.minLength) {
-      this.validationError = false
-
-      this.foundMovie.map<void>(searchResults => {
-        this.searchResults = searchResults
+      this.movieService.getMovie(this.searchStr, this.searchPageNumber)
+      .subscribe(response => {
+        this.searchResults = response['results']
+        this.totalPages = response['total_pages']
       })
     } else {
       this.validationError = true
     }
   }
 
+  onScrollSearch() {
+    if (this.searchPageNumber !== this.totalPages) {
+      this.searchPageNumber++
+      this.spinner.show()
+      this.loadNextMoviesSearch(this.searchPageNumber)
+      this.spinner.hide()
+    }
+  }
+
+  loadNextMoviesSearch(searchPageNumber: number) {
+    this.movieService.getMovie(this.searchStr, searchPageNumber)
+    .subscribe(response => {
+      this.searchResults = this.searchResults.concat(response['results'])
+    })
+  }
 }
 
 
