@@ -15,12 +15,19 @@
     Search query should be more than 3 characters!
   </mat-error>
 </div>
-
+<button
+[ngClass]="scrollUpBtn? 'scrollUp':'noScrollUp'"
+mat-raised-button
+color="primary"
+mat-button
+(click)="scrollUp()"
+>Up</button
+>
 <div class="container">
   <div class="wrapper"
     infiniteScroll
-    [infiniteScrollDistance]="1"
-    [infiniteScrollThrottle]="50"
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="5"
     (scrolled)="onScroll()"
     *ngIf="!searchStr; else search"
    >
@@ -38,10 +45,9 @@
       <mat-card-content class="mat-card-content">
         <img
           mat-card-lg-image
-          src="https://image.tmdb.org/t/p/w220_and_h330_face{{
-            results.poster_path
-          }}"
+          src="https://image.tmdb.org/t/p/w220_and_h330_face{{results.poster_path}}"
           alt="{{results.original_title}}"
+          onerror="this.src='../assets/placeholder-image.jpg'"
         />
         <p>Vote average: {{ results.vote_average }}</p>
         <p>Vote count: {{ results.vote_count }}</p>
@@ -56,13 +62,13 @@
       </mat-card-content>
 
       <mat-card-actions>
-        <a
+        <button
           class="open"
           mat-raised-button
           color="primary"
           mat-button
           [routerLink]="['/moviePage', results.id]"
-          >Open</a
+          >Open</button
         >
         <button
           class="toFavorites"
@@ -93,8 +99,8 @@
       <div
       class="wrapper"
       infiniteScroll
-      [infiniteScrollDistance]="1"
-      [infiniteScrollThrottle]="50"
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="5"
       (scrolled)="onScrollSearch()"
       >
       <mat-card *ngFor="let found of searchResults">
@@ -115,6 +121,7 @@
               found.poster_path
             }}"
             alt="{{found.original_title}}"
+            onerror="this.src='../assets/placeholder-image.jpg'"
           />
           <p>Vote average: {{ found.vote_average }}</p>
           <p>Vote count: {{ found.vote_count }}</p>
@@ -129,13 +136,13 @@
         </button>
 
         <mat-card-actions>
-          <a
+          <button
             class="open"
             mat-raised-button
             color="primary"
             mat-button
             [routerLink]="['/moviePage', found.id]"
-            >Open</a
+            >Open</button
           >
           <button
             class="toFavorites"

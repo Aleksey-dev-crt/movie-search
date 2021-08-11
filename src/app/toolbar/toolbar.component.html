@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" (scroll)="onScroll()" [ngClass]="fixedHeader? 'fixed':''">
   <span [routerLink]="['']">Movie search</span>
     <button class="toFavorites" mat-flat-button color="accent" [routerLink]="['/favoritesPage']">favorites</button>
 </mat-toolbar>

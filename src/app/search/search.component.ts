@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, HostListener} from '@angular/core';
 import {MovieService} from "../services/movie.service";
 import {movieData} from "../shared/interfaces";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -9,6 +9,7 @@ import {NgxSpinnerService} from "ngx-spinner";
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
+
 export class SearchComponent implements OnInit  {
 
   searchStr: string = ''
@@ -19,12 +20,12 @@ export class SearchComponent implements OnInit  {
   pageNumber: number = 1
   searchPageNumber: number = 1
   totalPages: number
+  scrollUpBtn: boolean = false
 
   constructor(
     public movieService: MovieService,
     private spinner: NgxSpinnerService
   ) {}
-
 
   ngOnInit(): void {
     this.initMovies()
@@ -38,6 +39,18 @@ export class SearchComponent implements OnInit  {
       //console.log('popular', this.popular)
       this.movieService.keys = []
     })
+  }
+
+  @HostListener('window:scroll', ['$event']) scrollPage() {
+    if (window.scrollY > 1000) {
+      this.scrollUpBtn = true
+    } else {
+      this.scrollUpBtn = false
+    }
+  }
+
+  scrollUp() {
+    window.scrollTo(0, 0)
   }
 
   onScroll() {

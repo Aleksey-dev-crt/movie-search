@@ -11,9 +11,9 @@ import {movieData, movieDetails} from "../shared/interfaces";
 })
 export class MoviePageComponent implements OnInit {
 
-  MovieDetails: movieDetails
+  MovieDetails: movieDetails = <any>{}
   recommendations: movieData[] = []
-  results: movieData
+  // results: movieData
   movieID: any
 
   constructor(

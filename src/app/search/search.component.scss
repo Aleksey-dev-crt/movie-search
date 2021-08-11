@@ -1,7 +1,7 @@
 .search {
   margin: 0 auto;
-  width: 800px;
-  padding-top: 50px;
+  max-width: 800px;
+  padding: 50px 10px 0;
 }
 
 .mat-form-field {
@@ -31,6 +31,7 @@ h1 {
 .mat-card-lg-image {
   width: 150px;
   height: 225px;
+  object-fit: cover;
 }
 
 .mat-card-content {
@@ -62,6 +63,24 @@ h1 {
 
 .loader {
   position: relative;
+}
+
+.scrollUp {
+  display: block;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  opacity: 0.2;
+  transition: opacity 0.2s linear;
+}
+
+.scrollUp:hover {
+  opacity: 0.5;
+}
+
+.noScrollUp {
+  display: none;
 }
 
 .open:hover {

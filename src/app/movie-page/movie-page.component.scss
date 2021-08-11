@@ -23,6 +23,7 @@ h3 {
   border: solid 1px #673ab7;
   border-radius: 5px;
   box-shadow: 5px 5px 2px #ccc;
+  object-fit: cover;
 }
 
 .header {
@@ -114,6 +115,7 @@ strong {
   width: 100%;
   border-radius: 5px;
   box-shadow: 3px 3px 1px #ccc;
+  object-fit: cover;
 }
 
 .recImg:hover {
