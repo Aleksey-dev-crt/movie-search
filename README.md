@@ -12,8 +12,6 @@ _Данный проект представляет собой веб прило
 
 [Angular-Movie-Search](https://movie-search-01.web.app/)
 
-*статус проекта: завершен*
-
 # AngularMovie-Search
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
