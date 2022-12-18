@@ -10,7 +10,7 @@ import { IMovieData, IMovieDetails } from '../shared/interfaces';
 })
 export class MoviePageComponent implements OnInit {
   MovieDetails = {} as IMovieDetails;
-  recommendations: IMovieData[] = [];
+  recommendations = [] as IMovieData[];
   pageNumber = 1;
   totalPages: number;
   movieID: number;
