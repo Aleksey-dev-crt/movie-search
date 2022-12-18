@@ -7,7 +7,7 @@ import { IMovieData } from '../shared/interfaces';
   styleUrls: ['./favorites-page.component.scss'],
 })
 export class FavoritesPageComponent implements OnInit {
-  favoriteMovies: IMovieData[] = [];
+  favoriteMovies = [] as IMovieData[];
 
   constructor() {}
 
