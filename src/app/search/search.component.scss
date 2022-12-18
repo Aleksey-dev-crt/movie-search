@@ -62,12 +62,15 @@ h1 {
 }
 
 .loader {
-  position: relative;
+  position: fixed;
+  top: 95%;
+  left: auto;
 }
 
 .scrollUp {
   display: block;
   position: fixed;
+  z-index: 1000;
   left: 0;
   bottom: 0;
   height: 100%;

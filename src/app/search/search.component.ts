@@ -1,26 +1,23 @@
-import {Component, OnInit, HostListener} from '@angular/core';
-import {MovieService} from "../services/movie.service";
-import {movieData} from "../shared/interfaces";
-import {NgxSpinnerService} from "ngx-spinner";
-
+import { Component, OnInit, HostListener } from '@angular/core';
+import { MovieService } from '../services/movie.service';
+import { IMovieData } from '../shared/interfaces';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.scss']
+  styleUrls: ['./search.component.scss'],
 })
-
-export class SearchComponent implements OnInit  {
-
-  searchStr: string = ''
-  minLength: number = 3
-  validationError: boolean
-  popular: movieData[] = []
-  searchResults: movieData[] = []
-  pageNumber: number = 1
-  searchPageNumber: number = 1
-  totalPages: number
-  scrollUpBtn: boolean = false
+export class SearchComponent implements OnInit {
+  searchStr = '';
+  minLength = 3;
+  validationError: boolean;
+  popular = [] as IMovieData[];
+  searchResults = [] as IMovieData[];
+  pageNumber = 1;
+  searchPageNumber = 1;
+  totalPages: number;
+  scrollUpBtn = false;
 
   constructor(
     public movieService: MovieService,
@@ -28,88 +25,89 @@ export class SearchComponent implements OnInit  {
   ) {}
 
   ngOnInit(): void {
-    this.initMovies()
+    this.initMovies();
   }
 
   initMovies() {
-    this.movieService.getMovies(this.pageNumber)
-    .subscribe(response => {
-      this.popular = response['results']
-      this.totalPages = response['total_pages']
-      //console.log('popular', this.popular)
-      this.movieService.keys = []
-    })
+    this.movieService.getMovies(this.pageNumber).subscribe(
+      (response) => {
+        this.popular = response.results;
+        this.totalPages = response.total_pages;
+      },
+      (err) => console.error('Observer got an error: ' + err)
+    );
   }
 
   @HostListener('window:scroll', ['$event']) scrollPage() {
     if (window.scrollY > 1000) {
-      this.scrollUpBtn = true
+      this.scrollUpBtn = true;
     } else {
-      this.scrollUpBtn = false
+      this.scrollUpBtn = false;
     }
   }
 
   scrollUp() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
 
   onScroll() {
     if (this.pageNumber !== this.totalPages) {
-      this.pageNumber++
-      //console.log('pageNumber', this.pageNumber)
-      this.spinner.show()
-      this.loadNextMovies(this.pageNumber)
-      this.spinner.hide()
+      this.pageNumber++;
+      this.loadNextMovies(this.pageNumber);
     }
   }
 
   loadNextMovies(pageNumber: number) {
-    this.movieService.getMovies(pageNumber)
-    .subscribe(response => {
-      this.popular = this.popular.concat(response['results'])
-      //console.log('newPopular', this.popular)
-    })
-}
+    this.spinner.show();
+    this.movieService.getMovies(pageNumber).subscribe(
+      (response) => (this.popular = this.popular.concat(response.results)),
+      (err) => console.error('Observer got an error: ' + err),
+      () => this.spinner.hide()
+    );
+  }
 
-  toFavorites(id: number) {
-    this.movieService.getFavorites(id, this.popular, this.searchResults, null)
+  toFavorites(movie: IMovieData) {
+    localStorage.setItem(`${movie.id}`, JSON.stringify(movie));
   }
 
   handleChange() {
-    this.spinner.hide()
     if (this.searchStr.length <= this.minLength) {
-      this.searchResults = null
+      this.searchResults = null;
     }
   }
 
   entered() {
     if (this.searchStr.length >= this.minLength) {
-      this.movieService.getMovie(this.searchStr, this.searchPageNumber)
-      .subscribe(response => {
-        this.searchResults = response['results']
-        this.totalPages = response['total_pages']
-      })
+      this.movieService
+        .getSearchedMovie(this.searchStr, this.searchPageNumber)
+        .subscribe(
+          (response) => {
+            this.searchResults = response.results;
+            this.totalPages = response.total_pages;
+          },
+          (err) => console.error('Observer got an error: ' + err)
+        );
     } else {
-      this.validationError = true
+      this.validationError = true;
     }
   }
 
   onScrollSearch() {
     if (this.searchPageNumber !== this.totalPages) {
-      this.searchPageNumber++
-      this.spinner.show()
-      this.loadNextMoviesSearch(this.searchPageNumber)
-      this.spinner.hide()
+      this.searchPageNumber++;
+      this.loadNextMoviesSearch(this.searchPageNumber);
     }
   }
 
   loadNextMoviesSearch(searchPageNumber: number) {
-    this.movieService.getMovie(this.searchStr, searchPageNumber)
-    .subscribe(response => {
-      this.searchResults = this.searchResults.concat(response['results'])
-    })
+    this.spinner.show();
+    this.movieService
+      .getSearchedMovie(this.searchStr, searchPageNumber)
+      .subscribe(
+        (response) =>
+          (this.searchResults = this.searchResults.concat(response.results)),
+        (err) => console.error('Observer got an error: ' + err),
+        () => this.spinner.hide()
+      );
   }
 }
-
-
-

@@ -10,7 +10,7 @@ _Данный проект представляет собой веб прило
 
 **Ссылка на страницу**
 
-[Angular-Movie-Search](https://movie-search-01.web.app/)
+[Angular-Movie-Search](https://movie-search-ng.web.app//)
 
 *статус проекта: завершен*
 

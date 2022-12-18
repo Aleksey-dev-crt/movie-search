@@ -1,54 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-
-export interface favoriteMovies {
-  adult: boolean
-  backdrop_path: string
-  genre_ids: []
-  id: number
-  original_language: string
-  original_title: string
-  overview: string
-  popularity: number
-  poster_path: string
-  release_date: string
-  title: string
-  video: boolean
-  vote_average: number
-  vote_count: number
-}
-
+import { Component, OnInit } from '@angular/core';
+import { IMovieData } from '../shared/interfaces';
 
 @Component({
   selector: 'app-favorites-page',
   templateUrl: './favorites-page.component.html',
-  styleUrls: ['./favorites-page.component.scss']
+  styleUrls: ['./favorites-page.component.scss'],
 })
 export class FavoritesPageComponent implements OnInit {
+  favoriteMovies: IMovieData[] = [];
 
-    fromLocalStorage: string
-    favoriteMovie: {}
-    favoriteMovies: favoriteMovies[] = []
-
-  constructor() { }
-
-
+  constructor() {}
 
   ngOnInit(): void {
-    for (let i = 0; i < localStorage.length; i++) {
-      this.fromLocalStorage = localStorage.getItem(`${localStorage.key(i)}`)
-      this.favoriteMovies.push(JSON.parse(this.fromLocalStorage))
-    }
+    Object.values(localStorage).forEach((movie) =>
+      this.favoriteMovies.push(JSON.parse(movie))
+    );
   }
 
   clear() {
-    localStorage.clear()
-    this.favoriteMovies = null
+    localStorage.clear();
+    this.favoriteMovies = [];
   }
 
-
-  remove(id) {
-    localStorage.removeItem(id)
-    const remove = this.favoriteMovies.filter(ID => ID.id !== id)
-    this.favoriteMovies = remove
+  remove(id: number) {
+    localStorage.removeItem(`${id}`);
+    this.favoriteMovies = this.favoriteMovies.filter(
+      (movie) => movie.id !== id
+    );
   }
 }

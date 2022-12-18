@@ -16,7 +16,7 @@
   </mat-error>
 </div>
 <button
-[ngClass]="scrollUpBtn? 'scrollUp':'noScrollUp'"
+[ngClass]="scrollUpBtn ? 'scrollUp':'noScrollUp'"
 mat-raised-button
 color="primary"
 mat-button
@@ -31,31 +31,31 @@ mat-button
     (scrolled)="onScroll()"
     *ngIf="!searchStr; else search"
    >
-    <mat-card *ngFor="let results of popular">
+    <mat-card *ngFor="let movie of popular">
       <mat-card-header>
-        <mat-card-title>{{ results.original_title }}</mat-card-title>
+        <mat-card-title>{{ movie.original_title }}</mat-card-title>
         <mat-card-subtitle
-          >Popularity: {{ results.popularity }}</mat-card-subtitle
+          >Popularity: {{ movie.popularity }}</mat-card-subtitle
         >
         <mat-card-subtitle
-          >Release date: {{ results.release_date }}</mat-card-subtitle
+          >Release date: {{ movie.release_date }}</mat-card-subtitle
         >
       </mat-card-header>
 
       <mat-card-content class="mat-card-content">
         <img
           mat-card-lg-image
-          src="https://image.tmdb.org/t/p/w220_and_h330_face{{results.poster_path}}"
-          alt="{{results.original_title}}"
+          src="https://image.tmdb.org/t/p/w220_and_h330_face{{movie.poster_path}}"
+          alt="{{movie.original_title}}"
           onerror="this.src='../assets/placeholder-image.jpg'"
         />
-        <p>Vote average: {{ results.vote_average }}</p>
-        <p>Vote count: {{ results.vote_count }}</p>
+        <p>Vote average: {{ movie.vote_average }}</p>
+        <p>Vote count: {{ movie.vote_count }}</p>
 
         <button
           mat-icon-button
           color="warn"
-          *ngIf="this.movieService.inFavorites(results.id)"
+          *ngIf="this.movieService.inFavorites(movie.id)"
         >
           <mat-icon>favorite</mat-icon>
         </button>
@@ -67,7 +67,7 @@ mat-button
           mat-raised-button
           color="primary"
           mat-button
-          [routerLink]="['/moviePage', results.id]"
+          [routerLink]="['/moviePage', movie.id]"
           >Open</button
         >
         <button
@@ -75,8 +75,8 @@ mat-button
           mat-raised-button
           color="accent"
           mat-button
-          (click)="toFavorites(results.id)"
-          [disabled]="this.movieService.inFavorites(results.id)"
+          (click)="toFavorites(movie)"
+          [disabled]="this.movieService.inFavorites(movie.id)"
         >
           To favorites
         </button>
@@ -103,14 +103,14 @@ mat-button
       [infiniteScrollThrottle]="5"
       (scrolled)="onScrollSearch()"
       >
-      <mat-card *ngFor="let found of searchResults">
+      <mat-card *ngFor="let foundMovie of searchResults">
         <mat-card-header>
-          <mat-card-title>{{ found.original_title }}</mat-card-title>
+          <mat-card-title>{{ foundMovie.original_title }}</mat-card-title>
           <mat-card-subtitle
-            >Popularity: {{ found.popularity }}</mat-card-subtitle
+            >Popularity: {{ foundMovie.popularity }}</mat-card-subtitle
           >
           <mat-card-subtitle
-            >Release date: {{ found.release_date }}</mat-card-subtitle
+            >Release date: {{ foundMovie.release_date }}</mat-card-subtitle
           >
         </mat-card-header>
 
@@ -118,19 +118,19 @@ mat-button
           <img
             mat-card-lg-image
             src="https://image.tmdb.org/t/p/w220_and_h330_face{{
-              found.poster_path
+              foundMovie.poster_path
             }}"
-            alt="{{found.original_title}}"
+            alt="{{foundMovie.original_title}}"
             onerror="this.src='../assets/placeholder-image.jpg'"
           />
-          <p>Vote average: {{ found.vote_average }}</p>
-          <p>Vote count: {{ found.vote_count }}</p>
+          <p>Vote average: {{ foundMovie.vote_average }}</p>
+          <p>Vote count: {{ foundMovie.vote_count }}</p>
         </mat-card-content>
 
         <button
           mat-icon-button
           color="warn"
-          *ngIf="this.movieService.inFavorites(found.id)"
+          *ngIf="this.movieService.inFavorites(foundMovie.id)"
         >
           <mat-icon>favorite</mat-icon>
         </button>
@@ -141,7 +141,7 @@ mat-button
             mat-raised-button
             color="primary"
             mat-button
-            [routerLink]="['/moviePage', found.id]"
+            [routerLink]="['/moviePage', foundMovie.id]"
             >Open</button
           >
           <button
@@ -149,8 +149,8 @@ mat-button
             mat-raised-button
             color="accent"
             mat-button
-            (click)="toFavorites(found.id)"
-            [disabled]="this.movieService.inFavorites(found.id)"
+            (click)="toFavorites(foundMovie)"
+            [disabled]="this.movieService.inFavorites(foundMovie.id)"
           >
             To favorites
           </button>
