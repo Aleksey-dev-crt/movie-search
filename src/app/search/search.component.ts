@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
         this.popular = response.results;
         this.totalPages = response.total_pages;
       },
-      (err) => console.error('Observer got an error: ' + err)
+      (err) => console.error('Observer got an error: ' + err.statusText)
     );
   }
 
@@ -61,7 +61,7 @@ export class SearchComponent implements OnInit {
     this.spinner.show();
     this.movieService.getMovies(pageNumber).subscribe(
       (response) => (this.popular = this.popular.concat(response.results)),
-      (err) => console.error('Observer got an error: ' + err),
+      (err) => console.error('Observer got an error: ' + err.statusText),
       () => this.spinner.hide()
     );
   }
@@ -72,7 +72,7 @@ export class SearchComponent implements OnInit {
 
   handleChange() {
     if (this.searchStr.length <= this.minLength) {
-      this.searchResults = null;
+      this.searchResults = [];
     }
   }
 
@@ -85,7 +85,7 @@ export class SearchComponent implements OnInit {
             this.searchResults = response.results;
             this.totalPages = response.total_pages;
           },
-          (err) => console.error('Observer got an error: ' + err)
+          (err) => console.error('Observer got an error: ' + err.statusText)
         );
     } else {
       this.validationError = true;
@@ -106,7 +106,7 @@ export class SearchComponent implements OnInit {
       .subscribe(
         (response) =>
           (this.searchResults = this.searchResults.concat(response.results)),
-        (err) => console.error('Observer got an error: ' + err),
+        (err) => console.error('Observer got an error: ' + err.statusText),
         () => this.spinner.hide()
       );
   }

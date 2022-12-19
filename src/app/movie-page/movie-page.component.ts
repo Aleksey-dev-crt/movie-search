@@ -25,14 +25,14 @@ export class MoviePageComponent implements OnInit {
       (params: Params) => {
         this.movieID = params.id;
       },
-      (err) => console.error('Observer got an error: ' + err)
+      (err) => console.error('Observer got an error: ' + err.statusText)
     );
 
     this.movieService.getMovieDetails(this.movieID).subscribe(
       (response) => {
         this.MovieDetails = response;
       },
-      (err) => console.error('Observer got an error: ' + err)
+      (err) => console.error('Observer got an error: ' + err.statusText)
     );
 
     this.movieService
@@ -42,7 +42,7 @@ export class MoviePageComponent implements OnInit {
           this.recommendations = response.results;
           this.totalPages = response.total_pages;
         },
-        (err) => console.error('Observer got an error: ' + err)
+        (err) => console.error('Observer got an error: ' + err.statusText)
       );
   }
 
@@ -53,7 +53,7 @@ export class MoviePageComponent implements OnInit {
         (response) => {
           this.recommendations = this.recommendations.concat(response.results);
         },
-        (err) => console.error('Observer got an error: ' + err)
+        (err) => console.error('Observer got an error: ' + err.statusText)
       );
   }
 
